@@ -2,8 +2,10 @@
 
 <template>
   <div class="statistics">
-    <p>Last updated: {{lastChecked}}</p>
-    <LineChart v-if="loaded" :data="totalUsBarChart" :options="options" />
+    <!-- <p>Last updated: {{lastUpdated}}</p> -->
+    <template>
+      <LineChart v-if="loaded" :data="totalUsBarChart" />
+    </template>
     <!-- <BarChart v-if="loaded" :data="totalUsBarChart" :options="options" /> -->
   </div>
 </template>
@@ -52,71 +54,7 @@ export default {
       });
   },
 
-  options() {
-    return {
-      animation: {
-        duration: this.animationSpeed
-      },
-      responsive: true,
-      maintainAspectRatio: false,
-      legend: {
-        onClick: (event, legend) => {
-          const legends = { ...this.legends };
 
-          switch (legend.text) {
-            case "Confirmed":
-              legends.confirmed = !legends.confirmed;
-              break;
-            case "Recovered":
-              legends.recovered = !legends.recovered;
-              break;
-            case "Deaths":
-              legends.deaths = !legends.deaths;
-              break;
-            case "Infected":
-              legends.infected = !legends.infected;
-              break;
-            default:
-              break;
-          }
-
-          this.legends = legends;
-          return false;
-        },
-        // scales: {
-        //   yAxes: [
-        //     {
-        //       ticks: {
-        //         beginAtZero: true
-        //       }
-        //     }
-        //   ]
-        // },
-        scales: {
-          yAxes: [
-            {
-              type: this.scale,
-              ticks: {
-                precision: 0,
-                fontColor: "#bdc3c7"
-              }
-            }
-          ],
-          xAxes: [
-            {
-              ticks: {
-                fontColor: "#bdc3c7"
-              }
-            }
-          ]
-        },
-        labels: {
-          fontColor: "#bdc3c7"
-        },
-        position: "bottom"
-      }
-    };
-  },
 
   methods: {
     formatDate(date) {
@@ -158,10 +96,6 @@ export default {
       });
     },
 
-    lastChecked() {
-        return this.formatDate(this.info.lastChecked);
-    },
-
     provinces() {
       return this.covidInfo.map(item => {
         return item.province;
@@ -170,7 +104,6 @@ export default {
 
     totalUsConfirmedChart() {
       return {
-        // labels: this.dates,
         labels: this.provinces,
         datasets: [
           {
@@ -262,3 +195,10 @@ export default {
   }
 };
 </script>
+
+<style>
+#line-chart {
+  /* max-height: 600px;
+  width: 100%; */
+}
+</style>
