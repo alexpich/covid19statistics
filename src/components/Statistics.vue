@@ -1,8 +1,6 @@
-
-
 <template>
   <div class="statistics">
-    <!-- <p>Last updated: {{lastUpdated}}</p> -->
+    <p>Last updated: {{lastUpdated}}</p>
     <template>
       <LineChart v-if="loaded" :data="totalUsBarChart" />
     </template>
@@ -54,8 +52,6 @@ export default {
       });
   },
 
-
-
   methods: {
     formatDate(date) {
       return dayjs(date)
@@ -96,6 +92,13 @@ export default {
       });
     },
 
+    lastUpdated() {
+      if (this.info) {
+        return this.formatDate(this.info.lastChecked);
+      }
+      return "";
+    },
+
     provinces() {
       return this.covidInfo.map(item => {
         return item.province;
@@ -118,7 +121,6 @@ export default {
 
     totalUsRecoveredChart() {
       return {
-        // labels: this.dates,
         labels: this.provinces,
         datasets: [
           {
@@ -131,30 +133,14 @@ export default {
       };
     },
 
-    totalUsInfectedChart() {
-      return {
-        // labels: this.dates,
-        labels: this.provinces,
-        datasets: [
-          {
-            label: "Infected",
-            borderColor: "rgb(155,89,187)",
-            backgroundColor: "rgba(155,89,187, 0.3)",
-            data: this.trend
-          }
-        ]
-      };
-    },
-
     totalUsDeathChart() {
       return {
-        // labels: this.dates,
         labels: this.provinces,
         datasets: [
           {
             label: "Deaths",
             borderColor: "rgb(231,76,51)",
-            backgroundColor: "rgba(231,76,51, 0.3)",
+            backgroundColor: "rgba(255,76,51, 0.3)",
             data: this.deaths
           }
         ]
@@ -169,6 +155,7 @@ export default {
             label: "Confirmed",
             borderColor: "rgb(52,152,221)",
             backgroundColor: "rgba(52,152,221, 0.3)",
+
             data: this.confirmed
           },
           {
@@ -176,12 +163,6 @@ export default {
             borderColor: "rgb(46,204,119)",
             backgroundColor: "rgba(46,204,119, 0.3)",
             data: this.recovered
-          },
-          {
-            label: "Infected",
-            borderColor: "rgb(155,89,187)",
-            backgroundColor: "rgba(155,89,187, 0.3)",
-            data: this.trend
           },
           {
             label: "Deaths",
@@ -197,8 +178,4 @@ export default {
 </script>
 
 <style>
-#line-chart {
-  /* max-height: 600px;
-  width: 100%; */
-}
 </style>
