@@ -1,5 +1,6 @@
 # covid19statistics
-
+A Vue.js web app that shows statistics of COVID-19 Coronavirus.
+ 
 ## Project setup
 ```
 yarn install
