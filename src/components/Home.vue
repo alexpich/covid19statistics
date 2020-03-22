@@ -1,15 +1,15 @@
 <template>
   <div>
     <h1>Home Component</h1>
-    <BarChart />
+    <Statistics />
   </div>
 </template>
 
 <script>
-import BarChart from "./BarChart";
+import Statistics from "./Statistics";
 export default {
   components: {
-    BarChart
+    'Statistics': Statistics
   }
 };
 </script>
