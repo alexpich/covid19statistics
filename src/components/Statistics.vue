@@ -2,7 +2,9 @@
   <div class="statistics">
     <p>Last updated: {{lastUpdated}}</p>
     <template>
-      <LineChart v-if="loaded" :data="totalUsBarChart" />
+      <div class="chart-container">
+        <LineChart v-if="loaded" :data="totalUsBarChart" :options="options" />
+      </div>
     </template>
     <!-- <BarChart v-if="loaded" :data="totalUsBarChart" :options="options" /> -->
   </div>
@@ -21,6 +23,7 @@ export default {
   },
   data() {
     return {
+      options: null,
       loaded: false,
       info: null,
       covidInfo: null,
@@ -51,7 +54,26 @@ export default {
         console.log(error);
       });
   },
-
+  options() {
+    return {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: true
+            }
+          }
+        ]
+      },
+      legend: {
+        labels: {
+          fontColor: "#829AB1"
+        }
+      }
+    };
+  },
   methods: {
     formatDate(date) {
       return dayjs(date)
@@ -105,48 +127,6 @@ export default {
       });
     },
 
-    totalUsConfirmedChart() {
-      return {
-        labels: this.provinces,
-        datasets: [
-          {
-            label: "Confirmed",
-            borderColor: "rgb(52,152,221)",
-            backgroundColor: "rgba(52,152,221, 0.3)",
-            data: this.confirmed
-          }
-        ]
-      };
-    },
-
-    totalUsRecoveredChart() {
-      return {
-        labels: this.provinces,
-        datasets: [
-          {
-            label: "Recovered",
-            borderColor: "rgb(46,204,119)",
-            backgroundColor: "rgba(46,204,119, 0.3)",
-            data: this.recovered
-          }
-        ]
-      };
-    },
-
-    totalUsDeathChart() {
-      return {
-        labels: this.provinces,
-        datasets: [
-          {
-            label: "Deaths",
-            borderColor: "rgb(231,76,51)",
-            backgroundColor: "rgba(255,76,51, 0.3)",
-            data: this.deaths
-          }
-        ]
-      };
-    },
-
     totalUsBarChart() {
       return {
         labels: this.provinces,
@@ -166,8 +146,8 @@ export default {
           },
           {
             label: "Deaths",
-            borderColor: "rgb(231,76,51)",
-            backgroundColor: "rgba(231,76,51, 0.3)",
+            borderColor: "rgb(255,154,89)",
+            backgroundColor: "rgba(255,186,115, 0.3)",
             data: this.deaths
           }
         ]
@@ -178,4 +158,7 @@ export default {
 </script>
 
 <style>
+.chart-container {
+  max-height: 600px;
+}
 </style>
