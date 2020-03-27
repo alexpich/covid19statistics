@@ -6,8 +6,6 @@ export default {
   extends: Line,
   props: ["data", "options"],
   mounted() {
-    console.log(this.data);
-    console.log(this.options);
     this.renderChart(this.data, this.options);
   }
 };
