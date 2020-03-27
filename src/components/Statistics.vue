@@ -1,7 +1,7 @@
 <template>
   <div class="statistics mt-4">
     <h2>Total Cases Worldwide</h2>
-    <p>Last updated: {{ formatDate(statisticsLastUpdated) }}</p>
+    <p>Last updated: {{ formatDate(totalStatisticsLastUpdated) }}</p>
     <div class="container chart-container">
       <BarChart v-if="loaded1" :chart-data="casesChart" :options="options" />
     </div>
@@ -11,6 +11,7 @@
     <br />
     <br />
     <h2>Top 5 Infected Countries</h2>
+    <p>Last updated: {{ formatDate(topFiveLastUpdated) }}</p>
     <div class="container chart-container">
       <BarChart v-if="loaded2" :chart-data="casesByCountryChart" :options="options" />
     </div>
@@ -35,7 +36,8 @@ export default {
       totalDeaths: 0,
       totalRecovered: 0,
       // Last Updates
-      statisticsLastUpdated: "",
+      totalStatisticsLastUpdated: "",
+      topFiveLastUpdated: "",
       // Cases By Country
       casesByCountryStats: [],
       // Confirmed
@@ -87,7 +89,7 @@ export default {
         this.totalDeaths = parseInt(data.total_deaths.replace(/,/g, "")) + "";
         this.totalRecovered =
           parseInt(data.total_recovered.replace(/,/g, "")) + "";
-        this.statisticsLastUpdated = data.statistic_taken_at;
+        this.totalStatisticsLastUpdated = data.statistic_taken_at;
 
         this.loaded1 = true;
       })
@@ -160,6 +162,8 @@ export default {
           parseInt(this.casesByCountryStats[3].deaths.replace(/,/g, "")) + "";
         this.countryFiveDeaths =
           parseInt(this.casesByCountryStats[4].deaths.replace(/,/g, "")) + "";
+
+        this.topFiveLastUpdated = data.statistic_taken_at;
 
         this.loaded2 = true;
       })
