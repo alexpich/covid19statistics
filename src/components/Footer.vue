@@ -9,6 +9,5 @@ export default {};
 <style>
 footer {
   background: #B6E0FE;
-  /* color: #fff; */
 }
 </style>
