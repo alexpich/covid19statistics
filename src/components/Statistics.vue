@@ -1,43 +1,43 @@
 <template>
   <div class="statistics">
-    <p>Last updated: {{lastUpdated}}</p>
+    <p>Last updated: {{ formatDate(statisticsLastUpdated) }}</p>
     <template>
-      <div class="chart-container">
-        <LineChart v-if="loaded" :data="totalUsBarChart" :options="options" />
+      <div class="container chart-container">
+        <BarChart v-if="loaded" :chart-data="casesChart" />
       </div>
     </template>
-    <!-- <BarChart v-if="loaded" :data="totalUsBarChart" :options="options" /> -->
   </div>
 </template>
 
 <script>
-// import BarChart from "./BarChart.vue";
-import LineChart from "./LineChart.vue";
+import BarChart from "./BarChart.vue";
 import dayjs from "dayjs";
 
 export default {
   name: "Statistics",
   components: {
-    // BarChart,
-    LineChart
+    BarChart
   },
   data() {
     return {
-      options: null,
       loaded: false,
-      info: null,
-      covidInfo: null,
+      totalCases: 0,
+      totalDeaths: 0,
+      totalRecovered: 0,
+      statisticsLastUpdated: "",
       apiKey: process.env.VUE_APP_API_KEY
     };
   },
+
   async mounted() {
     this.loaded = false;
+
     fetch(
-      "https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/stats?country=us",
+      "https://coronavirus-monitor.p.rapidapi.com/coronavirus/worldstat.php",
       {
         method: "GET",
         headers: {
-          "x-rapidapi-host": "covid-19-coronavirus-statistics.p.rapidapi.com",
+          "x-rapidapi-host": "coronavirus-monitor.p.rapidapi.com",
           "x-rapidapi-key": this.apiKey
         }
       }
@@ -46,33 +46,17 @@ export default {
         return response.json();
       })
       .then(data => {
-        this.info = data.data;
-        this.covidInfo = data.data.covid19Stats;
+        this.totalCases = parseInt(data.total_cases.replace(/,/g, "")) + "";
+        this.totalDeaths = parseInt(data.total_deaths.replace(/,/g, "")) + "";
+        this.totalRecovered =
+          parseInt(data.total_recovered.replace(/,/g, "")) + "";
+        this.statisticsLastUpdated = data.statistic_taken_at;
+
         this.loaded = true;
       })
-      .catch(error => {
-        console.log(error);
+      .catch(err => {
+        console.log(err);
       });
-  },
-  options() {
-    return {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        yAxes: [
-          {
-            ticks: {
-              beginAtZero: true
-            }
-          }
-        ]
-      },
-      legend: {
-        labels: {
-          fontColor: "#829AB1"
-        }
-      }
-    };
   },
   methods: {
     formatDate(date) {
@@ -83,72 +67,24 @@ export default {
   },
 
   computed: {
-    confirmed() {
-      return this.covidInfo.map(item => {
-        return item.confirmed;
-      });
-    },
-
-    recovered() {
-      return this.covidInfo.map(item => {
-        return item.recovered;
-      });
-    },
-
-    deaths() {
-      return this.covidInfo.map(item => {
-        return item.deaths;
-      });
-    },
-
-    // Subtract recovered and deaths from confirmed
-    infected() {
-      return this.covidInfo.map(item => {
-        return item.deaths;
-      });
-    },
-
-    dates() {
-      return this.covidInfo.map(item => {
-        return this.formatDate(item.lastUpdate);
-      });
-    },
-
-    lastUpdated() {
-      if (this.info) {
-        return this.formatDate(this.info.lastChecked);
-      }
-      return "";
-    },
-
-    provinces() {
-      return this.covidInfo.map(item => {
-        return item.province;
-      });
-    },
-
-    totalUsBarChart() {
+    casesChart() {
       return {
-        labels: this.provinces,
+        labels: ["Total Cases"],
         datasets: [
           {
             label: "Confirmed",
-            borderColor: "rgb(52,152,221)",
-            backgroundColor: "rgba(52,152,221, 0.3)",
-
-            data: this.confirmed
+            backgroundColor: "rgba(52,152,221)",
+            data: [this.totalCases]
           },
           {
             label: "Recovered",
-            borderColor: "rgb(46,204,119)",
-            backgroundColor: "rgba(46,204,119, 0.3)",
-            data: this.recovered
+            backgroundColor: "rgba(46,204,119)",
+            data: [this.totalRecovered]
           },
           {
             label: "Deaths",
-            borderColor: "rgb(255,154,89)",
-            backgroundColor: "rgba(255,186,115, 0.3)",
-            data: this.deaths
+            backgroundColor: "rgb(255,154,89)",
+            data: [this.totalDeaths]
           }
         ]
       };
