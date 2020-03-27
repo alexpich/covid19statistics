@@ -4,17 +4,7 @@ import { Bar } from "vue-chartjs";
 export default {
   name: "BarChart",
   extends: Bar,
-  props: {
-    chartData: {
-      type: Object,
-      default: null
-    }, 
-    options: {
-      type: Object,
-      default: null
-    }
-  },
-
+  props: ["chartData", "options"],
   mounted() {
     this.renderChart(this.chartData, this.options);
   }

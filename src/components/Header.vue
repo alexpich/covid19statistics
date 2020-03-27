@@ -1,16 +1,16 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light">
-    <router-link to="/" class="navbar-brand">COVID-19 Coronavirus Statistics</router-link>
-  </nav>
+  <div class="hero">
+    <h1 class="text-center">COVID-19 Coronavirus Statistics</h1>
+  </div>
 </template>
 
 <script>
 export default {};
-
 </script>
 
 <style>
-.navbar {
-  background: #DCEEFB;
+.hero {
+  background: #dceefb;
+  padding: 2rem 5rem;
 }
 </style>
