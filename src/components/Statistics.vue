@@ -213,7 +213,7 @@ export default {
         ],
         datasets: [
           {
-            label: "Cases",
+            label: "Confirmed",
             backgroundColor: "rgba(52,152,221, 0.6)",
             data: [
               this.countryOneCases,
