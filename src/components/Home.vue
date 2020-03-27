@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <h1 class="mt-4">Total Cases Worldwide</h1>
     <Statistics />
   </div>
 </template>
@@ -9,13 +8,13 @@
 import Statistics from "./Statistics";
 export default {
   components: {
-    'Statistics': Statistics
+    Statistics: Statistics
   }
 };
 </script>
 
 <style>
-  body {
-    background: rgb(104, 160, 185);
-  }
+body {
+  background: #F0F4F8;
+}
 </style>
