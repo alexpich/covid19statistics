@@ -196,7 +196,7 @@ export default {
           },
           {
             label: "Deaths",
-            backgroundColor: "rgb(255,154,89)",
+            backgroundColor: "rgb(255,48,46, 0.6)",
             data: [this.totalDeaths]
           }
         ]
