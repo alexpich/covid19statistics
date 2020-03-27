@@ -8,6 +8,7 @@
     </div>
     <hr />
     <div class="container">
+      <p class="text-center">Data pulled from John Hopkins</p>
       <p class="text-center">
         Created by
         <a href="https://alexpich.com">Alex Pich</a>
