@@ -114,16 +114,18 @@ export default {
       .then(data => {
         this.casesByCountryStats = data.countries_stat;
 
-        this.countryOneCases =
-          parseInt(this.casesByCountryStats[0].cases.replace(/,/g, "")) + "";
-        this.countryTwoCases =
-          parseInt(this.casesByCountryStats[1].cases.replace(/,/g, "")) + "";
-        this.countryThreeCases =
-          parseInt(this.casesByCountryStats[2].cases.replace(/,/g, "")) + "";
-        this.countryFourCases =
-          parseInt(this.casesByCountryStats[3].cases.replace(/,/g, "")) + "";
-        this.countryFiveCases =
-          parseInt(this.casesByCountryStats[4].cases.replace(/,/g, "")) + "";
+        // Converts the # of cases into an int so that we can sort numerically
+        this.convertJsonStringToInt();
+
+        // Sort by number of cases numerically and store it in the array
+        this.casesByCountryStats.sort(this.sortData("cases", true, parseInt));
+
+        // Top 5 Cases by Country
+        this.countryOneCases = this.casesByCountryStats[0].cases;
+        this.countryTwoCases = this.casesByCountryStats[1].cases;
+        this.countryThreeCases = this.casesByCountryStats[2].cases;
+        this.countryFourCases = this.casesByCountryStats[3].cases;
+        this.countryFiveCases = this.casesByCountryStats[4].cases;
 
         this.countryOneName = this.casesByCountryStats[0].country_name;
         this.countryTwoName = this.casesByCountryStats[1].country_name;
@@ -176,6 +178,26 @@ export default {
       return dayjs(date)
         .toDate()
         .toLocaleDateString("en-US", { timezone: "America/Los_Angeles " });
+    },
+    convertJsonStringToInt() {
+      this.casesByCountryStats.forEach(function(item) {
+        item.cases = item.cases.replace(/,/, "");
+      });
+    },
+    sortData(field, reverse, primer) {
+      const key = primer
+        ? function(x) {
+            return primer(x[field]);
+          }
+        : function(x) {
+            return x[field];
+          };
+
+      reverse = !reverse ? 1 : -1;
+
+      return function(a, b) {
+        return (a = key(a)), (b = key(b)), reverse * ((a > b) - (b > a));
+      };
     }
   },
 
