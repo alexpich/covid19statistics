@@ -1,6 +1,6 @@
 # covid19statistics
 A Vue.js web app that shows statistics of COVID-19 Coronavirus.
-Data retrieved from [API](https://rapidapi.com/astsiatsko/api/coronavirus-monitor)
+Data retrieved from [API](https://rapidapi.com/astsiatsko/api/coronavirus-monitor).
 Create your own account and api key and set it up in your enviroments.
 
 ## Project setup
