@@ -208,12 +208,12 @@ export default {
         datasets: [
           {
             label: "Confirmed",
-            backgroundColor: "rgba(52,152,221)",
+            backgroundColor: "rgba(52,152,221, 0.6)",
             data: [this.totalCases]
           },
           {
             label: "Recovered",
-            backgroundColor: "rgba(46,204,119)",
+            backgroundColor: "rgba(46,204,119, 0.6)",
             data: [this.totalRecovered]
           },
           {
