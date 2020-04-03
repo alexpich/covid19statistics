@@ -5,7 +5,7 @@ module.exports = {
       awsProfile: 'default',
       overrideEndpoint: false,
       region: 'us-west-1',
-      bucket: 'vuejs-covid19statistics-deploy',
+      bucket: 'covid19-statistics',
       createBucket: false,
       staticHosting: true,
       staticIndexPage: 'index.html',
