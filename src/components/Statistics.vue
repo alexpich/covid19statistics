@@ -121,11 +121,16 @@ export default {
         this.casesByCountryStats.sort(this.sortData("cases", true, parseInt));
 
         // Top 5 Cases by Country
-        this.countryOneCases = this.casesByCountryStats[0].cases;
-        this.countryTwoCases = this.casesByCountryStats[1].cases;
-        this.countryThreeCases = this.casesByCountryStats[2].cases;
-        this.countryFourCases = this.casesByCountryStats[3].cases;
-        this.countryFiveCases = this.casesByCountryStats[4].cases;
+        this.countryOneCases =
+          parseInt(this.casesByCountryStats[0].cases.replace(/,/g, "")) + "";
+        this.countryTwoCases =
+          parseInt(this.casesByCountryStats[1].cases.replace(/,/g, "")) + "";
+        this.countryThreeCases =
+          parseInt(this.casesByCountryStats[2].cases.replace(/,/g, "")) + "";
+        this.countryFourCases =
+          parseInt(this.casesByCountryStats[3].cases.replace(/,/g, "")) + "";
+        this.countryFiveCases =
+          parseInt(this.casesByCountryStats[4].cases.replace(/,/g, "")) + "";
 
         this.countryOneName = this.casesByCountryStats[0].country_name;
         this.countryTwoName = this.casesByCountryStats[1].country_name;
@@ -181,7 +186,7 @@ export default {
     },
     convertJsonStringToInt() {
       this.casesByCountryStats.forEach(function(item) {
-        item.cases = item.cases.replace(/,/, "");
+        item.cases = item.cases.replace(/,/g, "");
       });
     },
     sortData(field, reverse, primer) {
